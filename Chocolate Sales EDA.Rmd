@@ -1,0 +1,76 @@
+---
+title: "Chocolate Sales EDA"
+author: "Aleena Tran"
+date: "2026-02-08"
+output: pdf_document
+---
+## Convert CSV -> Dataframe
+
+```{r}
+cs <- read.csv("Chocolate Sales.csv")
+```
+
+`rm(df)` removes a dataframe.
+`head(cs)` returns the first 6 rows.
+`tail(cs)` returns the last 6 rows.
+Add a second argument to specify the # of rows shown.
+
+## Load Packages
+
+```{r, include = FALSE}
+library(tidyverse)
+```
+
+## Summary Statistics
+
+I added the argument `na.rm = TRUE` to indicate that null values should be ignored.
+
+### Summary Statistics for Boxes Shipped
+
+```{r}
+cs %>%
+  summarize(
+    mean = mean(Boxes.Shipped, na.rm = TRUE),
+    median = median(Boxes.Shipped, na.rm = TRUE),
+    std_dev = sd(Boxes.Shipped, na.rm = TRUE),
+    iqr = IQR(Boxes.Shipped, na.rm = TRUE),
+    min = min(Boxes.Shipped, na.rm = TRUE),
+    max = max(Boxes.Shipped, na.rm = TRUE)
+  )
+```
+
+### Summary Statistics for Amount
+
+```{r}
+cs %>%
+  summarize(
+    mean = mean(Amount, na.rm = TRUE),
+    median = median(Amount, na.rm = TRUE),
+    std_dev = sd(Amount, na.rm = TRUE),
+    iqr = IQR(Amount, na.rm = TRUE),
+    min = min(Amount, na.rm = TRUE),
+    max = max(Amount, na.rm = TRUE)
+  )
+```
+
+```{r}
+cs$Amount <- gsub("[$,]", "", cs$Amount) # Removes symbols from the rows
+```
+
+```{r}
+cs$Amount <- as.numeric(cs$Amount) # Changes the datatype from "chr" to "num"
+```
+
+```{r}
+cs %>%
+  summarize(
+    mean = mean(Amount, na.rm = TRUE),
+    median = median(Amount, na.rm = TRUE),
+    std_dev = sd(Amount, na.rm = TRUE),
+    iqr = IQR(Amount, na.rm = TRUE),
+    min = min(Amount, na.rm = TRUE),
+    max = max(Amount, na.rm = TRUE)
+  )
+```
+
+Error solved!
